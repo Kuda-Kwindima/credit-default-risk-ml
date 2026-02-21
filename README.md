@@ -1,55 +1,61 @@
 # Credit Default Risk Modeling (Finance + ML + Business)
 
-## Goal
-Build a **calibrated probability model** to predict credit default risk and support risk-based decision-making (approval, review, pricing, and capital allocation).
+## 🎯 Objective
+Build a calibrated probability model to predict credit default risk and support risk-based financial decision-making.
 
-## Business framing
-In lending, mistakes have different costs:
+---
 
-- **False Negative (miss a defaulter)** → potential loan loss
-- **False Positive (flag a good customer)** → lost revenue + customer friction
+## 💼 Business Context
 
-This project treats the model as a **decision tool**, not only a classifier.
+In lending, model errors have financial consequences:
 
-## Dataset
-UCI Credit Card Default Dataset (Taiwan).  
-Source: https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients
+- False Negative (missed defaulter) → direct financial loss  
+- False Positive (flag good customer) → lost revenue + customer friction  
 
-> Raw data is not included in the repo. See `data_raw/README.md`.
+This project frames ML as a **business decision tool**, not just a classifier.
 
-## Approach
-- Data cleaning + type validation (no object dtypes)
-- Feature engineering (utilization ratios, payment ratios)
-- Model: **XGBoost (XGBClassifier)**
+---
+
+## 🧠 Modeling Approach
+
+- Data cleaning & type validation
+- Feature engineering (utilization & payment ratios)
+- XGBoost classifier
 - Cross-validation + hyperparameter tuning
-- Threshold tuning (precision/recall trade-off)
-- Error analysis (FP/FN drivers)
-- Explainability: **SHAP**
-- Probability calibration: **Isotonic calibration** (reliability improvement)
+- Threshold optimization
+- SHAP explainability
+- Probability calibration (Isotonic regression)
 
-## Results (Test Set)
-- **ROC AUC:** ~0.78  
-- **CV ROC AUC:** ~0.786  
-- **Brier Score (original):** 0.179  
-- **Brier Score (calibrated):** 0.134  ✅ (probabilities became more reliable)
+---
 
-## Key drivers (Explainability)
-SHAP analysis showed that repayment status features dominated risk prediction:
-- `pay_0`, `pay_2`, `pay_3` are strong risk signals (recent delinquency)
-- Higher `limit_bal` generally reduces predicted risk
-- Utilization ratios add additional signal
+## 📊 Performance
 
-## Model risk & real-world considerations
-If deployed in a bank, the model should include:
-- **Monitoring for drift** (portfolio composition and economic regime changes)
-- **Periodic recalibration** to keep probabilities reliable
-- **Fairness review** and policy constraints
-- Documentation for governance (assumptions, limitations, validation)
+- ROC AUC (Test): ~0.78  
+- Cross-Validation ROC AUC: ~0.786  
+- Original Brier Score: 0.179  
+- Calibrated Brier Score: 0.134 ✅  
 
-## Repository structure
-- `notebooks/` – analysis and modeling notebooks
-- `data_raw/` – dataset reference (no raw data included)
+Calibration improved probability reliability significantly.
 
-## Next steps
-This project is part of a larger portfolio focused on **business ML impact**.
-Next: **Retail Revenue Optimization** (profit-driven modeling).
+---
+
+## 🔍 Key Insights (SHAP)
+
+- Recent delinquency (PAY_0, PAY_2) is strongest risk driver  
+- Higher credit limits reduce predicted default probability  
+- Utilization ratios add additional predictive power  
+
+---
+
+## ⚠️ Governance & Real-World Considerations
+
+- Monitor for economic regime changes  
+- Perform periodic recalibration  
+- Review fairness and compliance  
+- Address reject inference limitations  
+
+---
+
+## 🛠 Tech Stack
+
+Python, Pandas, Scikit-learn, XGBoost, SHAP, Matplotlib
